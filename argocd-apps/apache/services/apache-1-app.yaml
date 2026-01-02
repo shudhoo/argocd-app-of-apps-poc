@@ -8,7 +8,7 @@ metadata:
  #annotations: annotations goes here for each service like apche-1, apache-2, nginx-1, nginx-2
  #so there will be notification for each 
 spec:
-  project: apache
+  project: default
 
   source:
     repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git

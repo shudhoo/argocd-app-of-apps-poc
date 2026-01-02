@@ -14,7 +14,7 @@ spec: # specifications
     targetRevision: main
 
     # This path is the path to ArgoCD Applications YAML for.ex = apache-app.yaml & nginx-app.yaml
-    path: argocd-apps
+    path: .
   
   destination:
   # Root app always deploys Application CRs into argocd namespace
