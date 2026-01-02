@@ -1,0 +1,27 @@
+# App-of-Apps points to the ArgoCD Application YAMLS not the Kubernetes Manifest
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-app
+  namespace: argocd   #defaul argocd namespace
+sepc: # specifications
+  project: default  # name of the Project can be anything
+
+  source:
+    # Repo that contains ArgoCD Application Manifest (k8s)
+    repoURL: <Repository-URL>
+    targetRevision: main
+
+    # This path is the path to ArgoCD Applications YAML for.ex = apache-app.yaml & nginx-app.yaml
+    path: argocd-apps
+  
+  destination:
+  # Root app always deploys Application CRs into argocd namespace
+  server: <k8s-api-url> https://kubernetes.default.svc
+  namespace: argocd
+
+  syncPolicy:
+  automated:
+    prune: true      # Remove deleted child apps
+    selfHeal: true   # Fix drift automatically

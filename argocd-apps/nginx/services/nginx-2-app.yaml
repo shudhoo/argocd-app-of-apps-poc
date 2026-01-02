@@ -1,0 +1,25 @@
+# when the app-of-apps.yaml ((root file)) will run it will create applications nginx, apache. And inside these will be Application YAML which will be pointing to the kubernetes manifest 
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-1
+  namespace: argocd
+spec:
+  project: nginx
+
+  source:
+    repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git
+    targetRevision: main
+
+    # Points to Kubernetes manifests (or kustomize folder)
+    path: manifests/nginx/nginx-2
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nginx
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

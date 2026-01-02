@@ -1,0 +1,26 @@
+#This is the Application File app-of-apps.yaml ((root file)) looks for !
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apache
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git
+    targetRevision: main
+
+    # This folder contains service-level Application YAMLs
+
+    path: argocd-apps/apache/services
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,23 @@
+# #This is the Application File app-of-apps.yaml ((root file)) looks for !
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git
+    targetRevision: main
+    path: argocd-apps/nginx/services
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

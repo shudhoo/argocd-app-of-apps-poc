@@ -1,0 +1,110 @@
+This is a Demo for closely Understanding the App-Of-Apps Patern in ArgoCD, to implement for VG-Industrials
+As VG-Industrials have 3 sub-projects
+
+1. accounts-online
+2. erp
+3. reseller
+
+But for the demo we will take reference of an Artical published by CNCF [Cloud Native Computing Foundation]
+    Link - https://www.cncf.io/blog/2025/10/07/managing-kubernetes-workloads-using-the-app-of-apps-pattern-in-argocd-2/
+
+Flow -
+
+ArgoCD Installation, Steps to Install ArgoCD
+1. kubectl create namespace argocd
+2. kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+## Objects Created when ArgoCD Installed
+
+### CRD - Custom Resource Definations
+1. customresourcedefinition.apiextensions.k8s.io/applications.argoproj.io created
+    *  Represents an Argo CD Application
+    *  This is the core GitOps object
+
+2. customresourcedefinition.apiextensions.k8s.io/applicationsets.argoproj.io created
+    * Used by ApplicationSet controller
+    * Dynamically generates Applications (useful for monorepos, multi-env)
+
+3. customresourcedefinition.apiextensions.k8s.io/applicationsets.argoproj.io created
+    * Used for RBAC, repo whitelisting, namespace restrictions
+
+### Service Accounts (Identity for Pods)
+| ServiceAccount                     | Purpose                |
+| ---------------------------------- | ---------------------- |
+| `argocd-application-controller`    | Syncs Git → Cluster    |
+| `argocd-applicationset-controller` | Generates Applications |
+| `argocd-server`                    | API + UI               |
+| `argocd-repo-server`               | Git repo access        |
+| `argocd-dex-server`                | SSO / OIDC             |
+| `argocd-redis`                     | Cache                  |
+| `argocd-notifications-controller`  | Slack / Teams / Email  |
+
+### RBAC Objects (Permissions)
+| `role.rbac.authorization.k8s.io/argocd-application-controller created`                  |
+| `role.rbac.authorization.k8s.io/argocd-applicationset-controller created`               |
+| `role.rbac.authorization.k8s.io/argocd-dex-server created`                              |
+| `role.rbac.authorization.k8s.io/argocd-notifications-controller created`                |
+| `role.rbac.authorization.k8s.io/argocd-redis created`                                   |
+| `role.rbac.authorization.k8s.io/argocd-server created`                                  |
+| `clusterrole.rbac.authorization.k8s.io/argocd-application-controller created`           |
+| `clusterrole.rbac.authorization.k8s.io/argocd-applicationset-controller created`        |
+| `clusterrole.rbac.authorization.k8s.io/argocd-server created`                           |
+| `rolebinding.rbac.authorization.k8s.io/argocd-application-controller created`           |
+| `rolebinding.rbac.authorization.k8s.io/argocd-applicationset-controller created`        |
+| `rolebinding.rbac.authorization.k8s.io/argocd-dex-server created`                       |
+| `rolebinding.rbac.authorization.k8s.io/argocd-notifications-controller created`         |
+| `rolebinding.rbac.authorization.k8s.io/argocd-redis created`                            |
+| `rolebinding.rbac.authorization.k8s.io/argocd-server created`                           |
+| `clusterrolebinding.rbac.authorization.k8s.io/argocd-application-controller created`    |
+| `clusterrolebinding.rbac.authorization.k8s.io/argocd-applicationset-controller created` |
+| `clusterrolebinding.rbac.authorization.k8s.io/argocd-server created`                    |
+
+#### Key ones:
+
+`argocd-application-controller`
+`argocd-server`
+`argocd-applicationset-controller`
+
+
+### ConfigMaps (Configuration)
+1. `argocd-cm`
+    * Repo credentials
+    * OIDC config
+    * UI settings
+
+2. `argocd-rbac-cm`
+    * Argo CD RBAC rules
+    * argocd-cmd-params-cm
+    * Server flags (TLS, ports, insecure)
+
+3. `argocd-notifications-cm`
+    * Notification templates
+    * argocd-ssh-known-hosts-cm
+    * SSH trust for Git repos
+
+### Secrets
+1. `argocd-secret`
+    * Admin password hash
+    * JWT signing key
+
+2. `argocd-notifications-secret`
+    * Webhook tokens
+    * Slack / Teams credentials
+
+## Folder Structure
+```
+.
+├── app-of-app.yaml
+├── apps
+│   ├── cert-manager.yaml
+│   └── nginx-ingress.yaml
+└── charts
+    ├── cert-manager
+    │   ├── Chart.yaml
+    │   ├── templates
+    │   └── vaules.yaml
+    └── nginx-ingress
+        ├── Chart.yaml
+        ├── templates
+        └── vaules.yaml
+```

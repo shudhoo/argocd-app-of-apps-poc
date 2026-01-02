@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-1-deployment
+  labels:
+    app: apache-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: apache-1
+  template:
+    metadata:
+      labels:
+        app: apache-1
+    spec:
+      containers:
+        - name: apache-1
+          image: apache-1:latest
+          imagePullPolicy: Never   # force local image
+          ports:
+            - containerPort: 5000
