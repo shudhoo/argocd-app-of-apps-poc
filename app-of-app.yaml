@@ -5,7 +5,7 @@ kind: Application
 metadata:
   name: root-app
   namespace: argocd   #defaul argocd namespace
-sepc: # specifications
+spec: # specifications
   project: default  # name of the Project can be anything
 
   source:
@@ -18,10 +18,10 @@ sepc: # specifications
   
   destination:
   # Root app always deploys Application CRs into argocd namespace
-  server: https://kubernetes.default.svc
-  namespace: argocd
+    server: https://kubernetes.default.svc
+    namespace: argocd
 
   syncPolicy:
-  automated:
-    prune: true      # Remove deleted child apps
-    selfHeal: true   # Fix drift automatically
+    automated:
+      prune: true      # Remove deleted child apps
+      selfHeal: true   # Fix drift automatically
