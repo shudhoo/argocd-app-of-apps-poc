@@ -17,8 +17,11 @@ spec:
     path: argocd-apps/apache/services
 
   destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
+    - server: https://kubernetes.default.svc
+      namespace: argocd
+    - server: https://kubernetes.default.svc
+      namespace: apache
+
 
   syncPolicy:
     automated:
