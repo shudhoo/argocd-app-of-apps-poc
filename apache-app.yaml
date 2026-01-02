@@ -6,7 +6,7 @@ metadata:
   name: apache
   namespace: argocd
 spec:
-  project: default
+  project: apache
 
   source:
     repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git

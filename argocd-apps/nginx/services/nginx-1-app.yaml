@@ -6,7 +6,7 @@ metadata:
   name: nginx-1
   namespace: argocd
 spec:
-  project: default
+  project: nginx
 
   source:
     repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git
