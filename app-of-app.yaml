@@ -10,7 +10,7 @@ sepc: # specifications
 
   source:
     # Repo that contains ArgoCD Application Manifest (k8s)
-    repoURL: <Repository-URL>
+    repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git
     targetRevision: main
 
     # This path is the path to ArgoCD Applications YAML for.ex = apache-app.yaml & nginx-app.yaml
@@ -18,7 +18,7 @@ sepc: # specifications
   
   destination:
   # Root app always deploys Application CRs into argocd namespace
-  server: <k8s-api-url> https://kubernetes.default.svc
+  server: https://kubernetes.default.svc
   namespace: argocd
 
   syncPolicy:
