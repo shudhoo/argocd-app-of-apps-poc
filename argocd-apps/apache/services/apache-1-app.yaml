@@ -15,7 +15,7 @@ spec:
     targetRevision: main
 
     # Points to Kubernetes manifests (or kustomize folder)
-    path: manifests/nginx/nginx-1
+    path: manifests/apache/apache-1
 
   destination:
     server: https://kubernetes.default.svc
