@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apache-1-deployment
-  namespace: apache
+  name: reseller-web-app-1-deployment
+  namespace: reseller
   labels:
-    app: apache-1
+    app: reseller-web-app-1
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: apache-1
+      app: reseller-web-app-1
   template:
     metadata:
       labels:
-        app: apache-1
+        app: reseller-web-app-1
     spec:
       containers:
-        - name: apache-1
-          image: apache-1:latest
+        - name: reseller-web-app-1
+          image: apache-2:latest
           imagePullPolicy: Never   # force local image
           ports:
             - containerPort: 5000

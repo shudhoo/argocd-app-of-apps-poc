@@ -3,19 +3,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx
+  name: erp
   namespace: argocd
 spec:
-  project: nginx
+  project: erp
 
   source:
     repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git
-    targetRevision: main
-    path: argocd-apps/nginx/services
+    targetRevision: HEAD
+    path: argocd-apps/erp/services
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: epr
 
   syncPolicy:
     automated:

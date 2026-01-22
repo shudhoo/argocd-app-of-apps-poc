@@ -11,10 +11,9 @@ spec: # specifications
   source:
     # Repo that contains ArgoCD Application Manifest (k8s)
     repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git
-    targetRevision: main
-
-    # This path is the path to ArgoCD Applications YAML for.ex = apache-app.yaml & nginx-app.yaml
-    path: .
+    targetRevision: HEAD
+    # This path is the path to ArgoCD Applications YAML for.ex = reseller-app.yaml & erp-app.yaml
+    path: ./argocd-apps
   
   destination:
   # Root app always deploys Application CRs into argocd namespace

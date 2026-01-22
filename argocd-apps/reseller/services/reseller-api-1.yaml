@@ -3,23 +3,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apache-1
+  name: reseller-api-1
   namespace: argocd
- #annotations: annotations goes here for each service like apche-1, apache-2, nginx-1, nginx-2
- #so there will be notification for each 
 spec:
-  project: apache
+  project: reseller
 
   source:
     repoURL: https://github.com/shudhoo/argocd-app-of-apps-poc.git
-    targetRevision: main
+    targetRevision: HEAD
 
     # Points to Kubernetes manifests (or kustomize folder)
-    path: manifests/apache/apache-1
+    path: manifests/reseller/reseller-api-1
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: apache
+    namespace: reseller
 
   syncPolicy:
     automated:

@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-1-deployment
-  namespace: nginx
+  name: erp-web-app-1-deployment
+  namespace: erp
   labels:
-    app: nginx-1
+    app: erp-web-app-1
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: nginx-1
+      app: erp-web-app-1
   template:
     metadata:
       labels:
-        app: nginx-1
+        app: erp-web-app-1
     spec:
       containers:
-        - name: nginx-1
-          image: nginx-1:latest
+        - name: erp-web-app-1
+          image: nginx-2:latest
           imagePullPolicy: Never   # force local image
           ports:
             - containerPort: 5000
